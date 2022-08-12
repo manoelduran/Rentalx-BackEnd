@@ -5,7 +5,6 @@ import { IUsersRepository } from '../../repositories/implementations/IUsersRepos
 
 interface IRequest {
     name: string;
-    username: string;
     email: string;
     password: string;
     driver_license: string;
@@ -17,10 +16,9 @@ class CreateUserUseCase {
         @inject("UsersRepository")
         private usersRepository: IUsersRepository
     ) { }
-    async execute({ name, username, email, password, driver_license }: IRequest): Promise<void> {
+    async execute({ name, email, password, driver_license }: IRequest): Promise<void> {
         await this.usersRepository.create({
             name,
-            username,
             email,
             password,
             driver_license
