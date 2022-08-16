@@ -18,9 +18,12 @@ const ensureAuthenticated = async (request: Request, response: Response, next: N
         const { sub: user_id } = verify(token, "23a8f58ecbc0d219ba89218a2c320667") as IPayload;
         console.log(user_id);
         const usersRepository = new UsersRepository();
-        const selectedUser = usersRepository.findById(user_id);
+        const selectedUser = await usersRepository.findById(user_id);
         if (!selectedUser) {
             throw new AppError("User does not exists!", 401);
+        };
+        request.user = {
+            id: user_id,
         };
         next();
     } catch (error) {
