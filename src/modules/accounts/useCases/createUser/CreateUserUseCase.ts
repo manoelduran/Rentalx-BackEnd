@@ -12,8 +12,8 @@ class CreateUserUseCase {
         private usersRepository: IUsersRepository
     ) { }
     async execute({ name, email, password, driver_license }: ICreateUserDTO): Promise<void> {
-        const userAlreadyExists = this.usersRepository.findByEmail(email);
-        if(userAlreadyExists) {
+        const userAlreadyExists = await this.usersRepository.findByEmail(email);
+        if (userAlreadyExists) {
             throw new Error("User already exists");
         };
         const hasPassword = await hash(password, 8);
