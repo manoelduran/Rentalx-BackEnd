@@ -2,6 +2,7 @@ import { parse } from 'csv-parse';
 import { ICategoriesRepository } from '../../repositories/implementations/ICategoriesRepository';
 import fs from 'fs';
 import { inject, injectable } from 'tsyringe';
+import { AppError } from '../../../../errors/AppError';
 
 
 interface IImportCategory {
@@ -44,7 +45,7 @@ class ImportCategoryUseCase {
             const { name, description } = category;
             const alreadyExists = await this.categoriesRepository.findByName(name);
             if (alreadyExists) {
-                throw new Error("This specification already exists");
+                throw new AppError("This specification already exists");
             };
            await this.categoriesRepository.create({
                 name, description

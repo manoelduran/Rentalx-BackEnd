@@ -22,7 +22,10 @@ class UsersRepository implements IUsersRepository {
         const selectedUser = await this.repository.findOne({ email });
         return selectedUser;
     };
-
+    async findById(id: string): Promise<User> {
+        const selectedUser = await this.repository.findOne(id); // passa direto sem { } pq o id é padrão
+        return selectedUser;
+    };
 };
 
 export { UsersRepository };
