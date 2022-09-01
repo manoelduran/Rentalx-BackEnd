@@ -7,7 +7,6 @@ interface ICreateCarDTO {
     license_plate: string;
     fine_amount: number;
     brand: string;
-    created_at: Date;
     category_id: string;
 };
 

@@ -11,17 +11,17 @@ describe("Create Car", () => {
         createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory);
     })
     it("Should be able to create a new car", async () => {
-        await createCarUseCase.execute({
+      const car =  await createCarUseCase.execute({
             brand: "Brand",
             category_id: "category",
             daily_rate: 100,
             description: "Description Car",
             fine_amount: 60,
             license_plate: "ABC-1234",
-            created_at: new Date(),
             name: "Name Car",
 
         });
+        expect(car).toHaveProperty("id");
     });
 
     it("Should not be able to create a car if the same license_plate", async () => {
@@ -33,7 +33,6 @@ describe("Create Car", () => {
                 description: "Description Car",
                 fine_amount: 60,
                 license_plate: "ABC-1234",
-                created_at: new Date(),
                 name: "Car1",
 
             });
@@ -44,10 +43,22 @@ describe("Create Car", () => {
                 description: "Description Car",
                 fine_amount: 60,
                 license_plate: "ABC-1234",
-                created_at: new Date(),
                 name: "Car2",
 
             });
         }).rejects.toBeInstanceOf(AppError);
     });
+    it("Should be able to create a car only with available is true by default", async () => {
+        const car =  await createCarUseCase.execute({
+            brand: "Brand",
+            category_id: "category",
+            daily_rate: 100,
+            description: "Description Car",
+            fine_amount: 60,
+            license_plate: "ABCD-1234",
+            name: "Car Available",
+        });
+        console.log(car)
+        expect(car.available).toBe(true)
+    })
 })
