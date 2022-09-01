@@ -1,5 +1,4 @@
 import fs from 'fs'; // file system
-import { AppError } from '../errors/AppError';
 
 export const deleteFile = async (filename: string) => {
     try {
