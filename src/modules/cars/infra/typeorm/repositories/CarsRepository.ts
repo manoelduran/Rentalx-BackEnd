@@ -3,7 +3,6 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { getRepository, Repository } from "typeorm";
 import { Car } from "../entities/Car";
 
-
 class CarsRepository implements ICarsRepository {
     private repository: Repository<Car>;
     constructor() {
@@ -34,21 +33,23 @@ class CarsRepository implements ICarsRepository {
         const selectedCar = await this.repository.findOne({ license_plate })
         return selectedCar;
     };
-    async listCarsAvailable(name?: string, brand?: string, category_id?: string): Promise<Car[]> {
-        if (name) {
-            const listOfCarsByName = await this.repository.
-            return listOfCarsByName;
-        };
+    async listCarsAvailable(brand?: string, category_id?: string, name?: string): Promise<Car[]> {
+        console.log('brand', brand, category_id, name)
+        const carsQuery = await this.repository
+            .createQueryBuilder("c")
+            .where("available = :available", { available: true });
         if (brand) {
-            const listOfCarsByBrand = await this.repository.
-            return listOfCarsByBrand;
+            carsQuery.andWhere("c.brand = :brand", { brand })
         };
         if (category_id) {
-            const listOfCarsByCategory = await this.repository.
-            return listOfCarsByCategory;
+            carsQuery.andWhere("c.category_id = :category_id", { category_id })
         };
-        const listOfCars = await this.repository.find();
-        return listOfCars;
+        if (name) {
+            carsQuery.andWhere("c.name = :name", { name })
+        };
+        const cars = await carsQuery.getMany();
+        console.log('cars', cars)
+        return cars;
     };
 }
 

@@ -18,7 +18,7 @@ describe("List Cars", () => {
             license_plate: "BBC-4321",
             name: "Car 2"
         });
-        const cars = await listCarsUseCase.execute();
+        const cars = await listCarsUseCase.execute({});
         expect(cars).toEqual([newCar]);
     });
     it("Should be able to list all available cars by brand", async () => {
@@ -31,7 +31,7 @@ describe("List Cars", () => {
             license_plate: "BBC-4321",
             name: "Car 2"
         });
-        const cars = await listCarsUseCase.execute(newCar.brand);
+        const cars = await listCarsUseCase.execute({brand: "Brand 5"});
         expect(cars).toEqual([newCar]);
     });
     it("Should be able to list all available cars by name", async () => {
@@ -44,7 +44,7 @@ describe("List Cars", () => {
             license_plate: "BBC-4321",
             name: "Car 2"
         });
-        const cars = await listCarsUseCase.execute(newCar.name);
+        const cars = await listCarsUseCase.execute({name: "Car 2"});
         expect(cars).toEqual([newCar]);
     });
     it("Should be able to list all available cars by category", async () => {
@@ -57,7 +57,7 @@ describe("List Cars", () => {
             license_plate: "BBC-4321",
             name: "Car 2"
         });
-        const cars = await listCarsUseCase.execute(newCar.category_id);
+        const cars = await listCarsUseCase.execute({category_id: "cf26cfc1-cdfc-41de-9a0f-68c01dba0e47"});
         expect(cars).toEqual([newCar]);
     });
 });

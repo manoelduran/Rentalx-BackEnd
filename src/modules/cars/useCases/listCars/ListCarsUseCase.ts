@@ -3,7 +3,11 @@ import { injectable, inject } from "tsyringe";
 import { Car } from '../../infra/typeorm/entities/Car';
 
 
-
+interface IRequest {
+    brand?: string;
+    category_id?: string;
+    name?: string;
+};
 
 injectable()
 class ListCarsUseCase {
@@ -11,22 +15,13 @@ class ListCarsUseCase {
         @inject("CarsRepository")
         private carsRepository: ICarsRepository
     ) { }
-    async execute(name?: string,
-        brand?: string,
-        category_id?: string,): Promise<Car[]> {
-        if (name) {
-            const carsByName = await this.carsRepository.listCarsAvailable(name);
-            return carsByName;
-        };
-        if (brand) {
-            const carsByBrand = await this.carsRepository.listCarsAvailable(brand);
-            return carsByBrand;
-        };
-        if (category_id) {
-            const carsByCategory = await this.carsRepository.listCarsAvailable(category_id);
-            return carsByCategory;
-        };
-        const cars = await this.carsRepository.listCarsAvailable();
+    async execute({
+        brand,
+        category_id,
+        name
+    }: IRequest): Promise<Car[]> {
+        const cars = await this.carsRepository.listCarsAvailable(brand, category_id, name)
+        console.log('carsUSECASE', cars)
         return cars;
     }
 }
