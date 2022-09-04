@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { container } from "tsyringe";
 import { ListCarsUseCase } from "./ListCarsUseCase";
+import { container } from "tsyringe";
+
 
 
 class ListCarsController {
