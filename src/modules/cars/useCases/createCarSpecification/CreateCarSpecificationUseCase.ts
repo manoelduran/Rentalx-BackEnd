@@ -9,15 +9,18 @@ interface IRequest {
     specifications_id: string[];
 }
 
-// @injectable()
+@injectable()
 class CreateCarSpecificationUseCase {
     constructor(
-        // @inject("CarsRepository")
+        @inject("CarsRepository")
         private carsRepository: ICarsRepository,
+
+        @inject("SpecificationsRepository")
         private specificationsRepository: ISpecificationsRepository
     ) { }
     async execute({ car_id, specifications_id }: IRequest): Promise<Car> {
         const selectedCarById = await this.carsRepository.findById(car_id);
+        console.log('selectedCarById', selectedCarById)
         if (!selectedCarById) {
             throw new AppError("Car not found!");
         };
