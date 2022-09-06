@@ -25,14 +25,11 @@
 #Cadastro de Especificação no Carro {
     ** Requisitos funcionais **
     Deve ser possível cadastrar uma especificação para um carro;
-    Deve ser possível listar todas as especificações;
-    Deve ser possível listar todos os carros;
     ** Requisitos não funcionais **
 
     ** Regra de negócio **
     Não deve ser possivel cadastrar uma especificação em um carro não cadastrado;
     Não deve ser possível cadastrar uma especificação já existente para o mesmo carro;
-    O carro deve ser cadastrado com disponibilidade 'true' por padrão;
 }
 
 
