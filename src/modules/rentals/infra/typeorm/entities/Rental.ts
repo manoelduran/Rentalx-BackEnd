@@ -1,25 +1,25 @@
 import { v4 as uuidV4 } from 'uuid';
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity()
+@Entity("rentals")
 class Rental {
 
     @PrimaryColumn()
     id: string;
 
-
+    @Column()
     car_id: string;
 
-
+    @Column()
     user_id: string;
 
-    @CreateDateColumn()
+    @Column()
     start_date: Date;
 
-    @CreateDateColumn()
+    @Column()
     end_date: Date;
 
-    @CreateDateColumn()
+    @Column()
     expected_return_date: Date;
 
     @Column()
@@ -28,7 +28,7 @@ class Rental {
     @CreateDateColumn()
     created_at: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updated_at: Date;
 
 

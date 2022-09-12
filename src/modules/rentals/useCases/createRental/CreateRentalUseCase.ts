@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc';
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 
-dayjs.extend(utc);
+
 interface IRequest {
     user_id: string;
     car_id: string;
@@ -14,8 +14,10 @@ interface IRequest {
 @injectable()
 class CreateRentalUseCase {
     constructor(
-        @inject("rentals")
-        private rentalsRepository: IRentalsRepository
+        @inject("RentalsRepository")
+        private rentalsRepository: IRentalsRepository,
+        @inject("DayjsDateProvider")
+        private dateProvider: IDateProvider,
     ) { }
     async execute({
         user_id,
@@ -31,10 +33,9 @@ class CreateRentalUseCase {
         if (carAlreadyRentedByUser) {
             throw new AppError("This car is already rented by an user!");
         };
-        const expectedReturnDateFormat = dayjs(expected_return_date).utc().local().format();
-        const now = dayjs().utc().local().format();
-        const tomorrow = dayjs(expectedReturnDateFormat).diff(now, "hours");
-        if(tomorrow < minimalHour) {
+        const now = this.dateProvider.dateNow();
+        const tomorrow = this.dateProvider.compareIsTomorrowInHours(expected_return_date, now);
+        if (tomorrow < minimalHour) {
             throw new AppError("The minimal time to rent a car is 24 hours!")
         }
         console.log('tomorrow', tomorrow);
