@@ -4,6 +4,7 @@ import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsReposi
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 
 interface IRequest {
@@ -18,6 +19,8 @@ class CreateRentalUseCase {
         private rentalsRepository: IRentalsRepository,
         @inject("DayjsDateProvider")
         private dateProvider: IDateProvider,
+        @inject("CarsRepository")
+        private carsRepository: ICarsRepository,
     ) { }
     async execute({
         user_id,
@@ -38,6 +41,7 @@ class CreateRentalUseCase {
         if (tomorrow < minimalHour) {
             throw new AppError("The minimal time to rent a car is 24 hours!")
         }
+        await this.carsRepository.updateAvailable(car_id, false);
         console.log('tomorrow', tomorrow);
         const newRental = await this.rentalsRepository.create({
             user_id,
