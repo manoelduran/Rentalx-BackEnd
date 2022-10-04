@@ -77,3 +77,14 @@
    O usuário deve estar logado na aplicação;
 }
 
+#Listagem de Alugueis para usuário {
+     ** Requisitos funcionais **
+    Deve ser possível realizar a busca de todos os alugueis para o usuário
+
+    ** Requisitos não funcionais **
+
+
+    ** Regra de negócio **
+    O usuário deve estar logado na aplicação
+}
+
