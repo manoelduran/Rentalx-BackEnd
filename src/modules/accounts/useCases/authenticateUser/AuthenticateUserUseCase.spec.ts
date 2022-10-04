@@ -29,28 +29,25 @@ describe("Authenticate User", () => {
         console.log(authenticatedUser);
         expect(authenticatedUser).toHaveProperty("token")
     });
-    it('Should not be able to auth a user that not exists', () => {
-        expect(async () => {
-            await authenticateUserUseCase.execute({
-                email: "false@email.com",
-                password: "1234"
-            });
-        }).rejects.toBeInstanceOf(AppError);
+    it('Should not be able to auth a user that not exists', async () => {
+        await expect(authenticateUserUseCase.execute({
+            email: "false@email.com",
+            password: "1234"
+        })
+        ).rejects.toEqual(new AppError("Email or password are incorrect! Try another one!"))
     });
-    it('Should not be able to auth an user that have an incorrect password', () => {
-        expect(async () => {
-            const user: ICreateUserDTO = {
-                driver_license: "3123123",
-                email: "user@user.com",
-                password: "1234",
-                name: "User Name Error"
-            };
-            await createUserUseCase.execute(user);
-          const result =  await authenticateUserUseCase.execute({
-                email: "user@user.com",
-                password: "4321"
-            });
-            console.log('result', result)
-        }).rejects.toBeInstanceOf(AppError);
+    it('Should not be able to auth an user that have an incorrect password', async () => {
+        const user: ICreateUserDTO = {
+            driver_license: "3123123",
+            email: "user@user.com",
+            password: "1234",
+            name: "User Name Error"
+        };
+        await createUserUseCase.execute(user);
+        await expect(authenticateUserUseCase.execute({
+            email: "user@user.com",
+            password: "4321"
+        })
+        ).rejects.toEqual(new AppError("As senhas precisam ser iguais!"))
     });
 });

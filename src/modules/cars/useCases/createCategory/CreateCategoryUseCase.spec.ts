@@ -31,7 +31,6 @@ describe("Create category", () => {
         expect(categoryCreated).toHaveProperty("id")
     });
     it("Should not be able to create a new category", async () => {
-      expect(async () => {
         const category = {
             name: "Category Test",
             description: "Category description Test",
@@ -41,10 +40,10 @@ describe("Create category", () => {
             description: category.description,
         });
 
-        await createCategoryUseCase.execute({
+        await expect(createCategoryUseCase.execute({
             name: category.name,
             description: category.description,
-        });
-      }).rejects.toBeInstanceOf(AppError);
+        })
+        ).rejects.toEqual(new AppError("This category is already created!"));
     });
 })
