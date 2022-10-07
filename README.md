@@ -88,3 +88,17 @@
     O usuário deve estar logado na aplicação
 }
 
+#Recuperar Senha {
+    ** Requisitos funcionais **
+    Deve ser possível recuperar a senha informando email
+    O usuário deve receber um email com o passo a passo para a recuperação da senha
+    O usuário deve conseguir inserir uma nova senha
+
+    ** Requisitos não funcionais **
+
+
+    ** Regra de negócio **
+    O usuário precisa informar uma nova senha
+    O link enviado para a recuperação deve expirar em 3 h
+}
+
