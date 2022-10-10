@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 class DayjsDateProvider implements IDateProvider {
+ 
    dateNow() {
       return dayjs().toDate();
    };
@@ -25,6 +26,9 @@ class DayjsDateProvider implements IDateProvider {
    }
    addHours(hours: number): Date {
        return dayjs().add(hours, "hours").toDate();
+   }
+   compareIsBefore(start_date: Date, end_date: Date): boolean {
+      return dayjs(start_date).isBefore(end_date);
    }
 };
 
