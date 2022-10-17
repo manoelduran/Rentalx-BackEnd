@@ -1,4 +1,5 @@
 import { ICarsImageRepository } from "@modules/cars/repositories/ICarsImageRepository";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -9,7 +10,9 @@ interface IRequest {
 class UploadCarImageUseCase {
     constructor(
         @inject("CarsImageRepository")
-        private carsImageRepository: ICarsImageRepository
+        private carsImageRepository: ICarsImageRepository,
+        @inject("StorageProvider")
+        private storageProvider: IStorageProvider,
     ) { }
     async execute({
         car_id,

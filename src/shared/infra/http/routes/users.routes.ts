@@ -7,7 +7,7 @@ import multer from 'multer';
 
 const usersRoutes = Router();
 
-const uploadAvatar = multer(upload.upload("./tmp/avatar"));
+const uploadAvatar = multer(upload);
 
 const createUserController = new CreateUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
