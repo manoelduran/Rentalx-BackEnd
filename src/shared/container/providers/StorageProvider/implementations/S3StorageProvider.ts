@@ -18,13 +18,13 @@ class S3StorageProvider implements IStorageProvider {
     async save(file: string, folder: string): Promise<string> {
         const originalName = resolve(upload.tmpFolder, file);
         const fileContent = await fs.promises.readFile(originalName);
-        const contentType = mime.getType(originalName);
+        const ContentType = mime.getType(originalName);
         await this.client.putObject({
             Bucket: `${process.env.AWS_BUCKET}/${folder}`,
             Key: file,
             ACL: "public-read",
             Body: fileContent,
-            ContentType: contentType
+            ContentType,
         }).promise();
         await fs.promises.unlink(originalName);
         return file;
