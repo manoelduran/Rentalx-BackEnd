@@ -6,4 +6,3 @@ tmp/*
 .vscode
 !tmp/.gitkeep
 ormconfig.json
-dist
